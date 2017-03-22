@@ -27,7 +27,7 @@ J.ready(function(){
       });
     }
   },50);
-  addGap();
+  //addGap();
   //J.id("canvas").event("onclick","player.jump(16)");
 });
 
@@ -86,5 +86,13 @@ function addGap(){
 function gameOver(){
   isStop=true;
   J.showWait("Game Over","erroe")
+}
+function yMin(obj){
+  y_min=parseInt(obj.prev().val())
+  obj.prev().val("").attr("placeholder",y_min)
+}
+function xMax(obj){
+  x_max=parseInt(obj.prev().val())
+  obj.prev().val("").attr("placeholder",x_max)
 }
 window.onresize=setSize;
