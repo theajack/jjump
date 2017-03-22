@@ -13,9 +13,7 @@ J.ready(function(){
   canvas=J.id("canvas").getContext("2d");
 	canvas.fillStyle="#000";
   if (window.DeviceMotionEvent) {
-    window.addEventListener('devicemotion',function(event){
-      deviceMotionHandler(event)
-    }, false);
+    window.addEventListener('devicemotion',deviceMotionHandler, false);
   }
   t=setInterval(function(){
     if(!isStop){
@@ -36,9 +34,9 @@ var y_min=10;
 var x_max=5;
 var time=5;
 var flag=0; 
-function deviceMotionHandler(eventData) {
+function deviceMotionHandler(event) {
   if(flag!=1){
-    var acceleration =eventData.accelerationIncludingGravity;
+    var acceleration =event.accelerationIncludingGravity;
     if(flag==0){
       flag=2;
     }else if(flag==2){
