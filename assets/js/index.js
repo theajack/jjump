@@ -27,7 +27,7 @@ J.ready(function(){
       });
     }
   },50);
-  //addGap();
+  addGap();
   //J.id("canvas").event("onclick","player.jump(16)");
 });
 
@@ -81,7 +81,7 @@ function setSize(){
 function addGap(){
   setInterval(function(){
     gaps.prepend(new Gap());
-  },2500);
+  },4000);
 }
 function gameOver(){
   isStop=true;

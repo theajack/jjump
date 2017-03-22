@@ -2,7 +2,7 @@
   
   window.Gap=function(){
     this.type=0;//普通
-    this.width=J.getRandom(60,90);
+    this.width=J.getRandom(50,70);
     this.height=map.getFloorHeight();
     this.y=map.getHeight()-this.height;
     this.x=w;
