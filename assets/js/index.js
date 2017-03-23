@@ -32,6 +32,17 @@ J.ready(function(){
       showJumpLvl(2.22,2);
     }
   });*/
+  if(J.cookie("bestScore")!=""&&J.cookie("bestScore")!=undefined){
+    bestScore=parseInt(J.cookie("bestScore"));
+    J.id("bestScore").text(bestScore);
+  }
+  if(J.cookie("bestLvl")!=""&&J.cookie("bestLvl")!=undefined){
+    bestLvl=parseFloat(J.cookie("bestLvl"));
+    var a=Math.floor(bestLvl)-1;
+    if(a>7){a=7}
+    J.id("bestLvlNum").child(0).text(lvlChoose[a]);
+    J.id("bestLvlNum").child(1).text(bestLvl);
+  }
   t=setInterval(function(){
     if(!isStop&&!isPause){
       canvas.clearRect(0,0,w,h);
@@ -57,17 +68,6 @@ J.ready(function(){
   },loopTime);
   addGap();
   addCloud();
-  if(J.cookie("bestScore")!=""&&J.cookie("bestScore")!=undefined){
-    bestScore=parseInt(J.cookie("bestScore"));
-    J.id("bestScore").text(bestScore);
-  }
-  if(J.cookie("bestLvl")!=""&&J.cookie("bestLvl")!=undefined){
-    bestLvl=parseFloat(J.cookie("bestLvl"));
-    var a=Math.floor(bestLvl)-1;
-    if(a>7){a=7}
-    J.id("bestLvlNum").child(0).text(lvlChoose[a]);
-    J.id("bestLvlNum").child(1).text(bestLvl);
-  }
 });
 
 var y,x;
