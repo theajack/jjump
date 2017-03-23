@@ -164,7 +164,7 @@ function gameOver(){
   if(bestScore>bs||bs==""||bs==undefined){
     J.cookie("bestScore",bestScore);
   }
-  J.tag("title").text="我在【摇摆玛丽】中获得了"+bestScore+"的高分，击败了全国"+countPerc(bestScore)+"%的人，你敢来挑战吗？";
+  J.tag("title").text="我在【摇摆玛丽】中获得了"+bestScore+"分，击败了全国"+countPerc(bestScore)+"%的人，你敢来挑战吗？";
 }
 function countPerc(score){
   var d=0;
