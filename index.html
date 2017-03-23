@@ -2,6 +2,7 @@
 <html lang="zh-Hans" class="bg-white" >
   <head>
     <meta charset="utf-8">
+    <meta name="sharecontent" data-msg-img="assets/images/p_jump.png" data-msg-title="你的标题" data-msg-content="你的简介" data-msg-callBack="" data-line-img="assets/images/p_jump.png" data-line-title="你的标题" data-line-callBack=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="renderer" content="webkit">
@@ -18,15 +19,39 @@
     <div id="top"></div>
     <div id="bottom"></div>
     <canvas id="canvas"></canvas>
-    <div id="info"></div>
+    <div id="scoreWrapper">
+      <div id="score">0</div>
+      <span id="bestScoreText">最高记录</span>
+      <span id="bestScore">0</span>
+      <span id="bestLvlText">最高成就</span>
+      <span id="bestLvlNum"><span class="text">未起跳</span>(<span class="num">0</span>)</span>
+    </div>
+    <div id="info">
+      <div id="jumpLvlTitle">轻轻一跃</div>
+      <div id="jumpLvl">
+        <span id="jumpLvlText">跳跃指数</span>
+        <span id="jumpLvlNum">0</span>
+      </div>
+    </div>
     <div id="loose">
       <div id="looseTitle"><img src="assets/images/game_over.png" /></div>
-      <div id="scoreWrapper"><img src="assets/images/final_score.png" /><span id="score">3</span></div>
+      <div id="finalScoreWrapper"><img src="assets/images/final_score.png" /><span id="finalScore">0</span></div>
       <div id="btnWrapper">
         <span class="button show-off" onclick="showOff()">炫耀一下</span>
         <span class="button again" onclick="restart()">再来一局</span>
       </div>
     </div>
+    <div id="pauseBtnWrapper" onclick="pause()">
+      <img id="pauseBtn" src="assets/images/pause.png"/>
+      <img id="startBtn" src="assets/images/start.png"/>
+    </div>
+    <div id="showOffWrapper" onclick="this.fadeOut()">
+      <img src="assets/images/share.png"/>
+    </div>
+    <audio src="assets/audio/die.wav" id="dieAudio" controls="controls">
+    </audio>
+    <audio src="assets/audio/jump.wav" id="jumpAudio" controls="controls">
+    </audio>
     <script src="assets/js/jetter.min.js"></script>
     <script src="assets/js/player.js"></script>
     <script src="assets/js/cloud.js"></script>

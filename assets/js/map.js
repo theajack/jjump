@@ -8,9 +8,6 @@
     _draw();
   }
   function _draw(){
-    //canvas.fillStyle="#cc7949";
-    //canvas.fillRect(0,_getOy(),_width,_floor_height);
-    
 		canvas.drawImage(_floor_image,0,_getOy(),_width,_floor_height);
   }
   function _getOy(){
@@ -31,5 +28,7 @@
     _width=w;
   };Map.prototype.getFloorHeight=function(){
     return _floor_height;
-  };
+  };Map.prototype.draw=function(){
+    _draw();
+  }
 })()

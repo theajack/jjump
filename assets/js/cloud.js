@@ -16,12 +16,11 @@
     if(this.x<-this.width){
       clouds.remove(this);
     }else{
-      //canvas.fillStyle="#fff";
-      //canvas.fillRect( this.x, this.y, this.width, this.height);
-      
-      canvas.drawImage(_cloud_img[this.type],this.x,this.y,this.width,this.height);
+      this.draw();
     }
   };Cloud.prototype.setWidth=function(w){
     this.width=w;
+  };Cloud.prototype.draw=function(){
+    canvas.drawImage(_cloud_img[this.type],this.x,this.y,this.width,this.height);
   };
 })()

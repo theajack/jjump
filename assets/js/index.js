@@ -7,16 +7,32 @@ var player,map;
 var gaps=[],clouds=[];
 var isStop=false;
 var loopTime=50;
+var bestScore=0;
+var bestLvl=0;
+var isPause=false;
+var dieAudio=J.id("dieAudio"),jumpAudio=J.id("jumpAudio");
+
+var test=false;
 J.ready(function(){
   map=new Map();
   player=new Player();
   setSize();
   canvas=J.id("canvas").getContext("2d");
 	canvas.fillStyle="#000";
-  //if (window.DeviceMotionEvent) {window.addEventListener('devicemotion',deviceMotionHandler, false);}
-  J.id("canvas").event("onclick","player.jump(14)");
+  if (window.DeviceMotionEvent) {window.addEventListener('devicemotion',deviceMotionHandler, false);}
+  /*//J.id("canvas").event("onclick",function(){
+    if(!test){
+      test=true;
+      player.jump(10); 
+      jumpAudio.play();
+      setTimeout(function(){
+        test=false;
+      },600);
+      showJumpLvl(2.22,2);
+    }
+  });*/
   t=setInterval(function(){
-    if(!isStop){
+    if(!isStop&&!isPause){
       canvas.clearRect(0,0,w,h);
       map.act();
       gaps.each(function(item){
@@ -26,10 +42,26 @@ J.ready(function(){
         item.act();
       });
       player.act();
+    }else if(isStop){
+      canvas.clearRect(0,0,w,h);
+      map.draw();
+      gaps.each(function(item){
+        item.draw();
+      });
+      clouds.each(function(item){
+        item.draw();
+      });
+      player.act();
     }
   },loopTime);
   addGap();
   addCloud();
+  if(J.cookie("bestScore")){
+    bestScore=parseInt(J.cookie("bestScore"));
+  }
+  if(J.cookie("bestLvl")){
+    bestScore=parseFloat(J.cookie("bestLvl"));
+  }
 });
 
 var y,x;
@@ -37,6 +69,7 @@ var y_min=10;
 var x_max=5;
 var time=5;
 var flag=0; 
+var vChoose=[10,11,12,12.5,13,13.5,14,14.5]
 function deviceMotionHandler(event) {
   if(flag!=1){
     var acceleration =event.accelerationIncludingGravity;
@@ -49,23 +82,38 @@ function deviceMotionHandler(event) {
         //J.show(dy+","+dx);
         flag=1;
         var v=0;
-        var rate=Math.floor(dy/y_min);
-        if(rate==1){
-          v=10;
-        }else if(rate==2){
-          v=12;
-        }else{
-          v=14;
+        var rate=Math.floor(dy/y_min)-1;
+        if(rate>7){
+          rate=7;
         }
-        player.jump(v);
+        showJumpLvl((dy/y_min).toFixed(2),rate);
+        player.jump(vChoose[rate]);
         setTimeout(function(){
           flag=0;
-        },1000);
+        },500);
       }
     }
     y=acceleration.y;
     x=acceleration.x;
   }
+}
+
+var lvlChoose=["轻轻一跃","蓄力一跃","惊人之跃","完美一跃","振翅欲飞","无人能及","神之跳跃","还有谁"];
+var showJumpLvlT;
+function showJumpLvl(lvl,rate){
+  if(lvl>bestLvl){
+    bestLvl=lvl;
+    J.id("bestLvlNum").child(0).text(lvlChoose[rate]);
+    J.id("bestLvlNum").child(1).text(lvl);
+    J.cookie("bestLvl",lvl);
+  }
+  J.id("jumpLvlTitle").text(lvlChoose[rate]);
+  J.id("jumpLvlNum").text(lvl);
+  J.id("info").fadeIn();
+  clearTimeout(showJumpLvlT);
+  showJumpLvlT=setTimeout(function(){
+    J.id("info").fadeOut(null,100);
+  },2000);
 }
 function setSize(){
   var c=J.id("canvas");
@@ -80,44 +128,68 @@ function setSize(){
   J.id("bottom").css("height",mh);
   J.id("top").css("height",mh);
   J.id("loose").css("top",(h-210)/2+"px");
+  J.id("scoreWrapper").css("top",mh);
+  J.id("info").css("top",((h-ch)/2+50)+"px");
   map.setWidth(w);
   player.setOx(w);
 }
+var gap_time=2000;
 function addGap(){
-  setInterval(function(){
-    if(!isStop){
-      if(J.getRandom(0,1)>0.5){
-        gaps.prepend(new Gap());
-      }
+  setTimeout(function(){
+    if(!isStop&&!isPause){
+      gap_time=J.getRandom(3500,4500)-((player.getSpeed()*100));
+      gaps.prepend(new Gap());
     }
-  },2000);
+    addGap();
+  },gap_time);
 }
 function addCloud(){
   setInterval(function(){
-    if(!isStop){
-      if(J.getRandom(0,1)>0.6){
-        clouds.prepend(new Cloud());
-      }
+    if(!isStop&&!isPause){
+      clouds.prepend(new Cloud());
     }
   },1000);
 }
 function gameOver(){
+  dieAudio.play();
   isStop=true;
+  J.id("finalScore").text(player.getScore());
   J.id("loose").fadeIn();
+  var bs=J.cookie("bestScore");
+  if(bestScore>bs||!bs){
+    J.cookie("bestScore",bestScore);
+  }
 }
-function yMin(obj){
-  y_min=parseInt(obj.prev().val())
-  obj.prev().val("").attr("placeholder",y_min)
+function pause(){
+  if(isPause){
+    J.id("startBtn").fadeOut();
+    J.id("pauseBtn").fadeIn(function(){
+      isPause=false;
+    });
+  }else{
+    J.id("startBtn").fadeIn();
+    J.id("pauseBtn").fadeOut(function(){
+      isPause=true;
+    });
+  }
 }
-function xMax(obj){
-  x_max=parseInt(obj.prev().val())
-  obj.prev().val("").attr("placeholder",x_max)
+function modScore(score){
+  if(score>bestScore){
+    bestScore=score;
+    J.id("bestScore").text(score);
+  }
+  J.id("score").text(score);
 }
+
+
 function showOff(){
-  
+  J.id("showOffWrapper").fadeIn();
+  //J.tag("title").text="我在【】中获得了"+bestScore+"的高分，击败了全国"++"%的人，你敢来挑战吗？";
 }
 function restart(){
   J.id("loose").fadeOut();
+  player.reset();
+  J.id("score").text(0);
   gaps.empty();
   isStop=false;
 }
