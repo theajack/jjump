@@ -20,7 +20,7 @@ J.ready(function(){
   canvas=J.id("canvas").getContext("2d");
 	canvas.fillStyle="#000";
   if (window.DeviceMotionEvent) {window.addEventListener('devicemotion',deviceMotionHandler, false);}
-  scrollFix();
+  //scrollFix();
   /*//J.id("canvas").event("onclick",function(){
     if(!test){
       test=true;
@@ -43,31 +43,6 @@ J.ready(function(){
     J.id("bestLvlNum").child(0).text(lvlChoose[a]);
     J.id("bestLvlNum").child(1).text(bestLvl);
   }
-  t=setInterval(function(){
-    if(!isStop&&!isPause){
-      canvas.clearRect(0,0,w,h);
-      map.act();
-      gaps.each(function(item){
-        item.act();
-      });
-      clouds.each(function(item){
-        item.act();
-      });
-      player.act();
-    }else if(isStop){
-      canvas.clearRect(0,0,w,h);
-      map.draw();
-      gaps.each(function(item){
-        item.draw();
-      });
-      clouds.each(function(item){
-        item.draw();
-      });
-      player.act();
-    }
-  },loopTime);
-  addGap();
-  addCloud();
 });
 
 var y,x;
@@ -120,6 +95,35 @@ function showJumpLvl(lvl,rate){
   showJumpLvlT=setTimeout(function(){
     J.id("info").fadeOut(null,100);
   },2000);
+}
+function start(obj){
+  obj.fadeOut(function(){
+    setInterval(function(){
+      if(!isStop&&!isPause){
+        canvas.clearRect(0,0,w,h);
+        map.act();
+        gaps.each(function(item){
+          item.act();
+        });
+        clouds.each(function(item){
+          item.act();
+        });
+        player.act();
+      }else if(isStop){
+        canvas.clearRect(0,0,w,h);
+        map.draw();
+        gaps.each(function(item){
+          item.draw();
+        });
+        clouds.each(function(item){
+          item.draw();
+        });
+        player.act();
+      }
+    },loopTime);
+    addGap();
+    addCloud();
+  });
 }
 function setSize(){
   var c=J.id("canvas");

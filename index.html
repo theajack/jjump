@@ -28,9 +28,9 @@
     <div id="loose">
       <div id="looseTitle"><img src="assets/images/game_over.png" /></div>
       <div id="finalScoreWrapper"><img src="assets/images/final_score.png" /><span id="finalScore">0</span></div>
-      <div id="btnWrapper" onclick="restart()">
+      <div id="btnWrapper">
         <span class="button show-off" onclick="showOff()">炫耀一下</span>
-        <span class="button again">再来一局</span>
+        <span class="button again" onclick="restart()">再来一局</span>
       </div>
     </div>
     <div id="pauseBtnWrapper" onclick="pause()">
@@ -39,6 +39,12 @@
     </div>
     <div id="showOffWrapper" onclick="this.fadeOut()">
       <img src="assets/images/show-off.png"/>
+    </div>
+    <div id="teachWrapper" onclick="start(this)">
+      <img src="assets/images/teach.png"/>
+      <div class="text">向上或者向前迅速晃动手机<br></br>玛丽就可以跳跃了</div>
+      <br></br>
+      <div class="start">点击任意位置开始游戏</div>
     </div>
     <img src="assets/images/p_jump.png"/>
     <script src="assets/js/jetter.min.js"></script>
