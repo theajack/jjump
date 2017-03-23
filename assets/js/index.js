@@ -4,29 +4,32 @@ var cw,ch;
 var ox,oy;
 var t;
 var player,map;
-var gaps=[];
+var gaps=[],clouds=[];
 var isStop=false;
+var loopTime=50;
 J.ready(function(){
   map=new Map();
   player=new Player();
   setSize();
   canvas=J.id("canvas").getContext("2d");
 	canvas.fillStyle="#000";
-  if (window.DeviceMotionEvent) {
-    window.addEventListener('devicemotion',deviceMotionHandler, false);
-  }
+  if (window.DeviceMotionEvent) {window.addEventListener('devicemotion',deviceMotionHandler, false);}
+  //J.id("canvas").event("onclick","player.jump(16)");
   t=setInterval(function(){
     if(!isStop){
       canvas.clearRect(0,0,w,h);
-      player.act();
       map.act();
       gaps.each(function(item){
         item.act();
       });
+      clouds.each(function(item){
+        item.act();
+      });
+      player.act();
     }
-  },50);
+  },loopTime);
   addGap();
-  //J.id("canvas").event("onclick","player.jump(16)");
+  addCloud();
 });
 
 var y,x;
@@ -72,14 +75,26 @@ function setSize(){
   ch=map.getHeight();
   c.width=cw;
   c.height=ch;
-  c.css("margin-top",(h-ch)/2+"px")
+  var mh=(h-ch)/2+"px";
+  c.css("margin-top",mh)
+  J.id("bottom").css("height",mh);
+  J.id("top").css("height",mh);
   map.setWidth(w);
   player.setOx(w);
 }
 function addGap(){
   setInterval(function(){
+    if(J.getRandom(0,1)>0.5){
     gaps.prepend(new Gap());
-  },4000);
+    }
+  },2000);
+}
+function addCloud(){
+  setInterval(function(){
+    if(J.getRandom(0,1)>0.6){
+    clouds.prepend(new Cloud());
+    }
+  },1000);
 }
 function gameOver(){
   isStop=true;

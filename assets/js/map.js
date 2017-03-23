@@ -1,13 +1,17 @@
 (function(){
   var _height=300,
     _width,
-    _floor_height=50;
+    _floor_height=70;
+    _floor_image=new Image();
+    _floor_image.src="assets/images/floor.png";
   function _act(){
     _draw();
   }
   function _draw(){
-    canvas.fillStyle="#cc7949";
-    canvas.fillRect(0,_getOy(),_width,_floor_height);
+    //canvas.fillStyle="#cc7949";
+    //canvas.fillRect(0,_getOy(),_width,_floor_height);
+    
+		canvas.drawImage(_floor_image,0,_getOy(),_width,_floor_height);
   }
   function _getOy(){
     return _height-_floor_height;
@@ -27,5 +31,5 @@
     _width=w;
   };Map.prototype.getFloorHeight=function(){
     return _floor_height;
-  }
+  };
 })()

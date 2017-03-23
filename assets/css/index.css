@@ -5,4 +5,26 @@ html,body{
 body{
   position:fixed;
   margin:0;
+} 
+#canvas{
+  background-color:#fff;
+  position:relative;
+}
+#top{
+  background: -webkit-linear-gradient(#5abeff, #fff); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(#5abeff, #fff); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(#5abeff, #fff); /* Firefox 3.6 - 15 */
+  background: linear-gradient(#5abeff, #fff); /* 标准的语法 */
+  width:100%;
+  position:absolute;
+  top:0;
+}
+#bottom{
+  background: -webkit-linear-gradient(#5abeff, #0b5c92); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(#5abeff, #0b5c92); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(#5abeff, #0b5c92); /* Firefox 3.6 - 15 */
+  background: linear-gradient(#5abeff, #0b5c92); /* 标准的语法 */
+  width:100%;
+  position:absolute;
+  bottom:0;
 }
