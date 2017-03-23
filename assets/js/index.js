@@ -70,7 +70,7 @@ J.ready(function(){
 });
 
 var y,x;
-var y_min=8;
+var y_min=10;
 var x_max=5;
 var time=5;
 var flag=0; 
