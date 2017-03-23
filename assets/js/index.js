@@ -10,7 +10,7 @@ var loopTime=50;
 var bestScore=0;
 var bestLvl=0;
 var isPause=false;
-var dieAudio=J.id("dieAudio"),jumpAudio=J.id("jumpAudio");
+//var dieAudio=J.id("dieAudio"),jumpAudio=J.id("jumpAudio");
 
 var test=false;
 J.ready(function(){
@@ -56,11 +56,16 @@ J.ready(function(){
   },loopTime);
   addGap();
   addCloud();
-  if(J.cookie("bestScore")){
+  if(J.cookie("bestScore")!=""&&J.cookie("bestScore")!=undefined){
     bestScore=parseInt(J.cookie("bestScore"));
+    J.id("bestScore").text(bestScore);
   }
-  if(J.cookie("bestLvl")){
-    bestScore=parseFloat(J.cookie("bestLvl"));
+  if(J.cookie("bestLvl")!=""&&J.cookie("bestLvl")!=undefined){
+    bestLvl=parseFloat(J.cookie("bestLvl"));
+    var a=Math.floor(bestLvl)-1;
+    if(a>7){a=7}
+    J.id("bestLvlNum").child(0).text(lvlChoose[a]);
+    J.id("bestLvlNum").child(1).text(bestLvl);
   }
 });
 
@@ -86,7 +91,7 @@ function deviceMotionHandler(event) {
         if(rate>7){
           rate=7;
         }
-        showJumpLvl((dy/y_min).toFixed(2),rate);
+        showJumpLvl(parseFloat((dy/y_min).toFixed(2)),rate);
         player.jump(vChoose[rate]);
         setTimeout(function(){
           flag=0;
@@ -151,14 +156,31 @@ function addCloud(){
   },1000);
 }
 function gameOver(){
-  dieAudio.play();
+  //dieAudio.play();
   isStop=true;
   J.id("finalScore").text(player.getScore());
   J.id("loose").fadeIn();
   var bs=J.cookie("bestScore");
-  if(bestScore>bs||!bs){
+  if(bestScore>bs||bs==""||bs==undefined){
     J.cookie("bestScore",bestScore);
   }
+  J.tag("title").text="我在【摇摆玛丽】中获得了"+bestScore+"的高分，击败了全国"+countPerc(bestScore)+"%的人，你敢来挑战吗？";
+}
+function countPerc(score){
+  var d=0;
+  if(score>=5&&score<10){
+    d=80+score+J.getRandom(10,50)*0.1;
+  }else if(score>=10){
+    d=90+score-10+J.getRandom(10,50)*0.1;
+  }else if(score==0){
+    d=0;
+  }else{
+    d=score*20-J.getRandom(10,50)*0.1;
+  }
+  if(d>=100){
+    d=99+J.getRandom(0,10)*0.1;
+  }
+  return d;
 }
 function pause(){
   if(isPause){
@@ -184,7 +206,6 @@ function modScore(score){
 
 function showOff(){
   J.id("showOffWrapper").fadeIn();
-  //J.tag("title").text="我在【】中获得了"+bestScore+"的高分，击败了全国"++"%的人，你敢来挑战吗？";
 }
 function restart(){
   J.id("loose").fadeOut();
@@ -192,5 +213,8 @@ function restart(){
   J.id("score").text(0);
   gaps.empty();
   isStop=false;
+  if(isPause){
+    pause();
+  }
 }
 window.onresize=setSize;
