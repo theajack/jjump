@@ -3,14 +3,6 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="renderer" content="webkit">
-    <meta name="HandheldFriendly" content="true">
-    <meta http-equiv="Cache-Control" content="no-siteapp" >
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no, email=no">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="msapplication-tap-highlight" content="no">
     <title>摇摆玛丽</title>
     <link rel="stylesheet" href="assets/css/index.css">
   </head>
@@ -18,7 +10,7 @@
     <div id="top"></div>
     <div id="bottom"></div>
     <canvas id="canvas"></canvas>
-    <img src="assets/images/share.png"/>
+    <img style="display:none" src="assets/images/share.png"/>
     <div id="scoreWrapper">
       <div id="score">0</div>
       <span id="bestScoreText">最高记录</span>
@@ -48,10 +40,6 @@
     <div id="showOffWrapper" onclick="this.fadeOut()">
       <img src="assets/images/show-off.png"/>
     </div>
-    <!--<audio src="assets/audio/die.wav" id="dieAudio" controls="controls">
-    </audio>
-    <audio src="assets/audio/jump.wav" id="jumpAudio" controls="controls">
-    </audio>-->
     <img src="assets/images/p_jump.png"/>
     <script src="assets/js/jetter.min.js"></script>
     <script src="assets/js/player.js"></script>

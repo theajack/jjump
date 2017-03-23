@@ -70,7 +70,7 @@ J.ready(function(){
 });
 
 var y,x;
-var y_min=10;
+var y_min=8;
 var x_max=5;
 var time=5;
 var flag=0; 
@@ -167,7 +167,7 @@ function gameOver(){
   J.tag("title").text="我在【摇摆玛丽】中获得了"+bestScore+"分，击败了全国"+countPerc(bestScore)+"%的人，你敢来挑战吗？";
 }
 function countPerc(score){
-  var d=0;
+  var d=0.0;
   if(score>=5&&score<10){
     d=80+score+J.getRandom(10,50)*0.1;
   }else if(score>=10){
@@ -180,7 +180,7 @@ function countPerc(score){
   if(d>=100){
     d=99+J.getRandom(0,10)*0.1;
   }
-  return d;
+  return d.toFixed(2);
 }
 function pause(){
   if(isPause){
