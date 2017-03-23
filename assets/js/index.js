@@ -20,6 +20,7 @@ J.ready(function(){
   canvas=J.id("canvas").getContext("2d");
 	canvas.fillStyle="#000";
   if (window.DeviceMotionEvent) {window.addEventListener('devicemotion',deviceMotionHandler, false);}
+  scrollFix();
   /*//J.id("canvas").event("onclick",function(){
     if(!test){
       test=true;
@@ -216,5 +217,15 @@ function restart(){
   if(isPause){
     pause();
   }
+}
+function scrollFix(){
+  J.body().event({
+    ontouchmove:function(event){
+      event.preventDefault();
+    },
+    ontouchstart:function(event){
+      event.preventDefault();
+    }
+  });
 }
 window.onresize=setSize;
