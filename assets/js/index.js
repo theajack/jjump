@@ -10,11 +10,15 @@ var loopTime=50;
 var bestScore=0;
 var bestLvl=0;
 var isPause=false;
-
+var  _floor_image,_gap_img;
 var test=false;
 J.ready(function(){
   if(J.isMobile()){
     J.id("qrCode").remove();
+    _floor_image=new Image();
+    _floor_image.src="assets/images/floor.png";
+    _gap_img=new Image();
+    _gap_img.src="assets/images/gap.png";
     map=new Map();
     player=new Player();
     setSize();
@@ -33,7 +37,7 @@ J.ready(function(){
       J.id("bestLvlNum").child(0).text(lvlChoose[a]);
       J.id("bestLvlNum").child(1).text(bestLvl);
     }
-    J.id("teachImg").onload=function(){
+    _floor_image.onload=function(){
       J.class("start").text("点击任意位置开始游戏");
       J.id("teachWrapper").event("onclick","start(this)");
     };

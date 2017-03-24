@@ -2,8 +2,6 @@
   var _height=300,
     _width,
     _floor_height=70;
-    _floor_image=new Image();
-    _floor_image.src="assets/images/floor.png";
   function _act(){
     _draw();
   }

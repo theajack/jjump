@@ -1,7 +1,5 @@
 (function(){
-  _id=0,
-  _gap_img=new Image();
-  _gap_img.src="assets/images/gap.png";
+  _id=0;
   
   window.Gap=function(){
     this.type=0;//普通
