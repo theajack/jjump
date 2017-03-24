@@ -322,6 +322,7 @@ function showInfo(str,time){
 }
 function download(){
   J.open("http://15h97945z7.iok.la/download.aspx?name=shakeMario");
+  jsonp("download");
 }
 
 
