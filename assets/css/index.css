@@ -206,9 +206,62 @@ body{
 }
 
 
+#qrCode{
+  display: none;
+  text-align: center;
+  margin-top: 100px;
+  color:#fff;
+  font-weight:bold;
+}
+#qrCode img{
+  border-radius: 15px;
+}
+#qrCode .text{
+  font-size: 25px;
+  padding: 20px;
+}
+#qrCode .text2{
+  font-size: 20px;
+}
+#footer{
+  text-align:center;
+  padding:30px 0 20px 0;
+  color: #fff;
+  width:100%;
+}
+.link{cursor:pointer;text-decoration:underline}
+.link:hover{
+  color:#ddd;
+}
 
-
-
+.wechat-public{
+  position:relative;
+  cursor:pointer;
+}
+.wechat-public:hover{color:#ddd;}
+.wechat-img{
+  display:none;
+  position: absolute;
+  height: 200px;
+  top: -210px;
+  left: -50px;
+}
+.split-icon{
+  font-size: 20px;
+  font-weight: bold;
+}
+#copyright{
+  font-size:15px;
+  margin-top:5px;
+}
+#copyright span{
+  font-size: 25px;
+  position: relative;
+  top: 6px;
+}
+#footerLink{
+  font-size:16px;
+}
 
 
 

@@ -10,18 +10,46 @@ var loopTime=50;
 var bestScore=0;
 var bestLvl=0;
 var isPause=false;
-//var dieAudio=J.id("dieAudio"),jumpAudio=J.id("jumpAudio");
 
 var test=false;
 J.ready(function(){
-  map=new Map();
-  player=new Player();
-  setSize();
-  canvas=J.id("canvas").getContext("2d");
-	canvas.fillStyle="#000";
-  if (window.DeviceMotionEvent) {window.addEventListener('devicemotion',deviceMotionHandler, false);}
-  //scrollFix();
-  /*//J.id("canvas").event("onclick",function(){
+  if(J.isMobile()){
+    J.id("qrCode").remove();
+    map=new Map();
+    player=new Player();
+    setSize();
+    canvas=J.id("canvas").getContext("2d");
+    canvas.fillStyle="#000";
+    if (window.DeviceMotionEvent) {window.addEventListener('devicemotion',deviceMotionHandler, false);}
+    //clickTest()
+    if(J.cookie("bestScore")!=""&&J.cookie("bestScore")!=undefined){
+      bestScore=parseInt(J.cookie("bestScore"));
+      J.id("bestScore").text(bestScore);
+    }
+    if(J.cookie("bestLvl")!=""&&J.cookie("bestLvl")!=undefined){
+      bestLvl=parseFloat(J.cookie("bestLvl"));
+      var a=Math.floor(bestLvl)-1;
+      if(a>7){a=7}
+      J.id("bestLvlNum").child(0).text(lvlChoose[a]);
+      J.id("bestLvlNum").child(1).text(bestLvl);
+    }
+    J.id("teachImg").onload=function(){
+      J.class("start").text("点击任意位置开始游戏");
+      J.id("teachWrapper").event("onclick","start(this)");
+    };
+    window.onresize=setSize;
+  }else{
+    J.id("gameWrapper").remove();
+    J.id("qrCode").css("display","block");
+    J.tag("html").css("background-color","#57bafb");
+    J.class("wechat-public").event({
+      "onmouseover":"J.class('wechat-img').fadeIn()",
+      "onmouseleave":"J.class('wechat-img').fadeOut()"
+    });
+  }
+});
+function clickTest(){
+  J.id("canvas").event("onclick",function(){
     if(!test){
       test=true;
       player.jump(10); 
@@ -31,20 +59,8 @@ J.ready(function(){
       },600);
       showJumpLvl(2.22,2);
     }
-  });*/
-  if(J.cookie("bestScore")!=""&&J.cookie("bestScore")!=undefined){
-    bestScore=parseInt(J.cookie("bestScore"));
-    J.id("bestScore").text(bestScore);
-  }
-  if(J.cookie("bestLvl")!=""&&J.cookie("bestLvl")!=undefined){
-    bestLvl=parseFloat(J.cookie("bestLvl"));
-    var a=Math.floor(bestLvl)-1;
-    if(a>7){a=7}
-    J.id("bestLvlNum").child(0).text(lvlChoose[a]);
-    J.id("bestLvlNum").child(1).text(bestLvl);
-  }
-});
-
+  })
+}
 var y,x;
 var y_min=10;
 var x_max=5;
@@ -222,14 +238,3 @@ function restart(){
     pause();
   }
 }
-function scrollFix(){
-  J.body().event({
-    ontouchmove:function(event){
-      event.preventDefault();
-    },
-    ontouchstart:function(event){
-      event.preventDefault();
-    }
-  });
-}
-window.onresize=setSize;

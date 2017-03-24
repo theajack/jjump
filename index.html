@@ -7,46 +7,70 @@
     <link rel="stylesheet" href="assets/css/index.css">
   </head>
   <body>
-    <div id="top"></div>
-    <div id="bottom"></div>
-    <canvas id="canvas"></canvas>
-    <img src="assets/images/share.png"/>
-    <div id="scoreWrapper">
-      <div id="score">0</div>
-      <span id="bestScoreText">最高记录</span>
-      <span id="bestScore">0</span>
-      <span id="bestLvlText">最高成就</span>
-      <span id="bestLvlNum"><span class="text">未起跳</span>(<span class="num">0</span>)</span>
-    </div>
-    <div id="info">
-      <div id="jumpLvlTitle">轻轻一跃</div>
-      <div id="jumpLvl">
-        <span id="jumpLvlText">跳跃指数</span>
-        <span id="jumpLvlNum">0</span>
+    <div id="qrCode">
+      <img src="assets/images/qrcode.png"/>
+      <div class="text">请在手机端扫描二维码进行游戏</div>
+      <div class="text2">更多精彩请访问 <span class="link" onclick="J.open('http://www.theajack.com')">theajack.com</span></div>
+      
+      
+      <div id="footer">
+        <div id="footerLink">
+          <span class="link" onclick="J.open('https://github.com/theajack')">GitHub</span>
+          <span class="split-icon">|</span>
+          <span class="link" onclick="J.open('http://weibo.com/p/1005055304330572/home?from=page_100505&mod=TAB&is_all=1')">新浪微博</span>
+          <span class="split-icon">|</span>
+          
+          <span class="wechat-public">微信公众号<img class="wechat-img" src="assets/images/wechat_qrcode.jpg"/></span>
+          <span class="split-icon d-hide">|</span>
+          
+          邮箱:theajack@qq.com
+        </div>
+        <div id="copyright">
+          <span>&copy;</span> 2017 TheaJack All rights reserved
+        </div>
       </div>
     </div>
-    <div id="loose">
-      <div id="looseTitle"><img src="assets/images/game_over.png" /></div>
-      <div id="finalScoreWrapper"><img src="assets/images/final_score.png" /><span id="finalScore">0</span></div>
-      <div id="btnWrapper">
-        <span class="button show-off" onclick="showOff()">炫耀一下</span>
-        <span class="button again" onclick="restart()">再来一局</span>
+    <div style="display:none" id="gameWrapper">
+      <div id="top"></div>
+      <div id="bottom"></div>
+      <canvas id="canvas"></canvas>
+      <img src="assets/images/share.png"/>
+      <div id="scoreWrapper">
+        <div id="score">0</div>
+        <span id="bestScoreText">最高记录</span>
+        <span id="bestScore">0</span>
+        <span id="bestLvlText">最高成就</span>
+        <span id="bestLvlNum"><span class="text">未起跳</span>(<span class="num">0</span>)</span>
+      </div>
+      <div id="info">
+        <div id="jumpLvlTitle">轻轻一跃</div>
+        <div id="jumpLvl">
+          <span id="jumpLvlText">跳跃指数</span>
+          <span id="jumpLvlNum">0</span>
+        </div>
+      </div>
+      <div id="loose">
+        <div id="looseTitle"><img src="assets/images/game_over.png" /></div>
+        <div id="finalScoreWrapper"><img src="assets/images/final_score.png" /><span id="finalScore">0</span></div>
+        <div id="btnWrapper">
+          <span class="button show-off" onclick="showOff()">炫耀一下</span>
+          <span class="button again" onclick="restart()">再来一局</span>
+        </div>
+      </div>
+      <div id="pauseBtnWrapper" onclick="pause()">
+        <img id="pauseBtn" src="assets/images/pause.png"/>
+        <img id="startBtn" src="assets/images/start.png"/>
+      </div>
+      <div id="showOffWrapper" onclick="this.fadeOut()">
+        <img id="showOffImg" src="assets/images/show-off.png"/>
+      </div>
+      <div id="teachWrapper">
+        <img id="teachImg" src="assets/images/teach.png"/>
+        <div class="text">向上或者向前迅速晃动手机<br></br>玛丽就可以跳跃了<br></br>找一个最舒服的姿势赢得高分吧</div>
+        <br></br>
+        <div class="start">正在加载...</div>
       </div>
     </div>
-    <div id="pauseBtnWrapper" onclick="pause()">
-      <img id="pauseBtn" src="assets/images/pause.png"/>
-      <img id="startBtn" src="assets/images/start.png"/>
-    </div>
-    <div id="showOffWrapper" onclick="this.fadeOut()">
-      <img src="assets/images/show-off.png"/>
-    </div>
-    <div id="teachWrapper" onclick="start(this)">
-      <img src="assets/images/teach.png"/>
-      <div class="text">向上或者向前迅速晃动手机<br></br>玛丽就可以跳跃了</div>
-      <br></br>
-      <div class="start">点击任意位置开始游戏</div>
-    </div>
-    <img src="assets/images/p_jump.png"/>
     <script src="assets/js/jetter.min.js"></script>
     <script src="assets/js/player.js"></script>
     <script src="assets/js/cloud.js"></script>
