@@ -1,9 +1,5 @@
 (function(){
   
-  _cloud_img=[new Image(),new Image(),new Image()];
-  _cloud_img[0].src="assets/images/cloud1.png";
-  _cloud_img[1].src="assets/images/cloud2.png";
-  _cloud_img[2].src="assets/images/cloud3.png";
   window.Cloud=function(){
     this.type=J.getRandom(0,2);//∆’Õ®
     this.height=J.getRandom(30,40);

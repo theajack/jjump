@@ -31,7 +31,21 @@
       </div>
     </div>
     <div id="gameWrapper">
-      <div id="top"></div>
+      <div id="top">
+        <div class="tool forbid" id="showTool" onclick="showOff()" data-on="false">
+          <img src="assets/images/wechat.png"/>
+        </div>
+        <div class="tool forbid" onclick="practice(this)" data-on="false">
+          <img src="assets/images/practice.png"/>
+        </div>
+        <div id="teachTool" class="tool" onclick="help(this)" data-on="true">
+          <img src="assets/images/help.png"/>
+        </div>
+        <div class="tool" onclick="download()">
+          <img src="assets/images/phone.png"/>
+        </div>
+        <div id="showText">test</div>
+      </div>
       <div id="bottom"></div>
       <canvas id="canvas"></canvas>
       <img src="assets/images/share.png"/>
@@ -61,7 +75,7 @@
         <img id="pauseBtn" src="assets/images/pause.png"/>
         <img id="startBtn" src="assets/images/start.png"/>
       </div>
-      <div id="showOffWrapper" onclick="this.fadeOut()">
+      <div id="showOffWrapper" onclick="closeShowOff()">
         <img id="showOffImg" src="assets/images/show-off.png"/>
       </div>
       <div id="teachWrapper">

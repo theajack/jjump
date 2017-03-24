@@ -15,18 +15,7 @@
     _run_time=0,
     _run_time_max=50,
     _score=0,
-    _gap_id=-1,
-    _run_image=[new Image(),new Image(),new Image(),new Image()],
-    _stand_image=new Image(),
-    _jump_image=new Image(),
-    _die_image=new Image();
-    _stand_image.src="assets/images/p_stand.png";
-    _jump_image.src="assets/images/p_jump.png";
-    _die_image.src="assets/images/p_die.png";
-    _run_image[0].src="assets/images/p_run1.png";
-    _run_image[1].src="assets/images/p_run2.png";
-    _run_image[2].src="assets/images/p_run3.png";
-    _run_image[3].src="assets/images/p_stand.png";
+    _gap_id=-1;
   function _jump(v){
     _v=v;
     _isJump=true;

@@ -10,15 +10,14 @@ var loopTime=50;
 var bestScore=0;
 var bestLvl=0;
 var isPause=false;
-var  _floor_image,_gap_img;
+var _run_image,_stand_image,_jump_image,_die_image;
+var _floor_image,_gap_img,_cloud_img;
 var test=false;
+var isPractice=false;
 J.ready(function(){
   if(J.isMobile()){
     J.id("qrCode").remove();
-    _floor_image=new Image();
-    _floor_image.src="assets/images/floor.png";
-    _gap_img=new Image();
-    _gap_img.src="assets/images/gap.png";
+    initImg();
     map=new Map();
     player=new Player();
     setSize();
@@ -39,7 +38,7 @@ J.ready(function(){
     }
     _floor_image.onload=function(){
       J.class("start").text("点击任意位置开始游戏");
-      J.id("teachWrapper").event("onclick","start(this)");
+      J.id("teachWrapper").event("onclick","hideTeach()");
     };
     window.onresize=setSize;
   }else{
@@ -52,6 +51,28 @@ J.ready(function(){
     });
   }
 });
+
+function initImg(){
+  _run_image=[new Image(),new Image(),new Image(),new Image()];
+  _stand_image=new Image();
+  _jump_image=new Image();
+  _die_image=new Image();
+  _stand_image.src="assets/images/p_stand.png";
+  _jump_image.src="assets/images/p_jump.png";
+  _die_image.src="assets/images/p_die.png";
+  _run_image[0].src="assets/images/p_run1.png";
+  _run_image[1].src="assets/images/p_run2.png";
+  _run_image[2].src="assets/images/p_run3.png";
+  _run_image[3].src="assets/images/p_stand.png";
+  _gap_img=new Image();
+  _gap_img.src="assets/images/gap.png";
+  _cloud_img=[new Image(),new Image(),new Image()];
+  _cloud_img[0].src="assets/images/cloud1.png";
+  _cloud_img[1].src="assets/images/cloud2.png";
+  _cloud_img[2].src="assets/images/cloud3.png";
+  _floor_image=new Image();
+  _floor_image.src="assets/images/floor.png";
+}
 function clickTest(){
   J.id("canvas").event("onclick",function(){
     if(!test){
@@ -66,8 +87,8 @@ function clickTest(){
   })
 }
 var y,x;
-var y_min=10;
-var x_max=5;
+var y_min=9;
+var x_max=7;
 var time=5;
 var flag=0; 
 var vChoose=[10,11,12,12.5,13,13.5,14,14.5]
@@ -102,11 +123,13 @@ function deviceMotionHandler(event) {
 var lvlChoose=["轻轻一跃","蓄力一跃","惊人之跃","完美一跃","振翅欲飞","无人能及","神之跳跃","还有谁"];
 var showJumpLvlT;
 function showJumpLvl(lvl,rate){
-  if(lvl>bestLvl){
-    bestLvl=lvl;
-    J.id("bestLvlNum").child(0).text(lvlChoose[rate]);
-    J.id("bestLvlNum").child(1).text(lvl);
-    J.cookie("bestLvl",lvl);
+  if(!isPractice){
+    if(lvl>bestLvl){
+      bestLvl=lvl;
+      J.id("bestLvlNum").child(0).text(lvlChoose[rate]);
+      J.id("bestLvlNum").child(1).text(lvl);
+      J.cookie("bestLvl",lvl);
+    }
   }
   J.id("jumpLvlTitle").text(lvlChoose[rate]);
   J.id("jumpLvlNum").text(lvl);
@@ -116,34 +139,32 @@ function showJumpLvl(lvl,rate){
     J.id("info").fadeOut(null,100);
   },2000);
 }
-function start(obj){
-  obj.fadeOut(function(){
-    setInterval(function(){
-      if(!isStop&&!isPause){
-        canvas.clearRect(0,0,w,h);
-        map.act();
-        gaps.each(function(item){
-          item.act();
-        });
-        clouds.each(function(item){
-          item.act();
-        });
-        player.act();
-      }else if(isStop){
-        canvas.clearRect(0,0,w,h);
-        map.draw();
-        gaps.each(function(item){
-          item.draw();
-        });
-        clouds.each(function(item){
-          item.draw();
-        });
-        player.act();
-      }
-    },loopTime);
-    addGap();
-    addCloud();
-  });
+function start(){
+  setInterval(function(){
+    if(!isStop&&!isPause){
+      canvas.clearRect(0,0,w,h);
+      map.act();
+      gaps.each(function(item){
+        item.act();
+      });
+      clouds.each(function(item){
+        item.act();
+      });
+      player.act();
+    }else if(isStop){
+      canvas.clearRect(0,0,w,h);
+      map.draw();
+      gaps.each(function(item){
+        item.draw();
+      });
+      clouds.each(function(item){
+        item.draw();
+      });
+      player.act();
+    }
+  },loopTime);
+  addGap();
+  addCloud();
 }
 function setSize(){
   var c=J.id("canvas");
@@ -166,7 +187,7 @@ function setSize(){
 var gap_time=2000;
 function addGap(){
   setTimeout(function(){
-    if(!isStop&&!isPause){
+    if(!isStop&&!isPause&&!isPractice){
       gap_time=J.getRandom(3500,4500)-((player.getSpeed()*100));
       gaps.prepend(new Gap());
     }
@@ -230,7 +251,12 @@ function modScore(score){
 
 
 function showOff(){
+  unforbid(J.id("showTool"));
   J.id("showOffWrapper").fadeIn();
+}
+function closeShowOff(){
+  forbid(J.id("showTool"));
+  J.id("showOffWrapper").fadeOut()
 }
 function restart(){
   J.id("loose").fadeOut();
@@ -241,4 +267,56 @@ function restart(){
   if(isPause){
     pause();
   }
+}
+function practice(obj){
+  if(obj.attr("data-on")=="true"){
+    forbid(obj);
+    isPractice=false;
+    showInfo("已关闭练习模式");
+    player.reset();
+  }else{
+    unforbid(obj);
+    isPractice=true;
+    showInfo("已打开练习模式");
+    gaps.empty();
+    player.reset();
+    J.id("score").text(0);
+  }
+}
+function help(obj){
+  if(obj.attr("data-on")=="true"){
+    hideTeach();
+  }else{
+    unforbid(obj)
+    J.id("teachWrapper").fadeIn();
+  }
+}
+function hideTeach(){  
+  forbid(J.id("teachTool"));
+  if(J.id("teachWrapper").data("first")!="false"){
+    J.id("teachWrapper").data("first","false").fadeOut(function(){
+      start();
+    });
+  }else{
+    J.id("teachWrapper").fadeOut();
+  }
+}
+function forbid(obj){
+  obj.attr("data-on","false").addClass("forbid");
+}
+function unforbid(obj){
+  obj.attr("data-on","true").removeClass("forbid");
+}
+var showInfoT;
+var showText=J.id("showText");
+function showInfo(str,time){
+  time=J.checkArg(time,2000);
+  showText.text(str).fadeIn();
+  clearTimeout(showInfoT);
+  showInfoT=setTimeout(function(){
+    showText.fadeOut(null,300)
+  },time);
+}
+function download(){
+  J.open("http://15h97945z7.iok.la/download.aspx?name=shakeMario");
 }
