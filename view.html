@@ -59,6 +59,17 @@
       text-align:center;
       padding: 10px 0;
     }
+    #refresh{
+      width: 100%;
+      color: #3c85b5;
+      background-color: rgba(255,255,255,.5);
+      padding: 8px;
+      text-align: center;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
   </style>
   <body>
     <div id="title">摇摆玛丽数据统计</div>
@@ -73,19 +84,23 @@
       <div id="dataWrapper">
       </div>
     </div>
+    <div id="refresh" onclick="refresh()">刷新</div>
     <script src="assets/js/jetter.min.js"></script>
   </body>
   <script type="text/javascript">
   J.ready(function(){
     jsonp("viewData");
   });
-  function jsonp(data){
+  function jsonp(data,isRe){
     J.jsonp({
       url:"http://15h97945z7.iok.la/shakeMario.aspx",
       //url:"http://localhost:50866/theajack/shakeMario.aspx",
       data:{type:data},
       success:function(data){
         bindData(data.value);
+        if(isRe){
+          J.show("刷新成功");
+        }
       },
       time:15000,
       timeout:function(err){
@@ -99,6 +114,10 @@
     data.each(function(item){
       wrapper.append(getOne(item));
     })
+  }
+  function refresh(){
+    J.id("dataWrapper").empty();
+    jsonp("viewData",true);
   }
   function getOne(item){
     return J.new("div.record").html('\
