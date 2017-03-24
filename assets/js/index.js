@@ -50,6 +50,7 @@ J.ready(function(){
       "onmouseleave":"J.class('wechat-img').fadeOut()"
     });
   }
+  jsonp("open");
 });
 
 function initImg(){
@@ -165,6 +166,7 @@ function start(){
   },loopTime);
   addGap();
   addCloud();
+  jsonp("play");
 }
 function setSize(){
   var c=J.id("canvas");
@@ -267,6 +269,7 @@ function restart(){
   if(isPause){
     pause();
   }
+  jsonp("play");
 }
 function practice(obj){
   if(obj.attr("data-on")=="true"){
@@ -320,3 +323,32 @@ function showInfo(str,time){
 function download(){
   J.open("http://15h97945z7.iok.la/download.aspx?name=shakeMario");
 }
+
+
+
+function jsonp(data){
+  J.jsonp({
+    url:"http://15h97945z7.iok.la/shakeMario.aspx",
+    data:{type:data},
+    success:function(data){},
+    time:20000,
+    timeout:function(err){},
+    message:"请求超时"
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
