@@ -37,14 +37,13 @@
       background-color: rgba(255,255,255,.9);
     }
     .data{
-      width:20%;
+      width:15%;
       float:left;
       padding: 5px 0;
       border-top:1px solid rgb(87, 186, 251);
       border-right:1px solid rgb(87, 186, 251);
     }
-    .data.id{width:10%}
-    .data.date{width:30%}
+    .data.date{width:25%}
     
     .data.no-right{
       border-right:none;
@@ -70,18 +69,30 @@
       cursor: pointer;
       font-weight: bold;
     }
+    .data.plus{
+      color:#f44;
+    }
   </style>
   <body>
     <div id="title">摇摆玛丽数据统计</div>
     <div id="main">
       <div class="record main">
-        <div class="data id no-top">id</div>
         <div class="data date no-top">日期</div>
-        <div class="data no-top">游戏数</div>
-        <div class="data no-top">打开数</div>
-        <div class="data no-top no-right">下载数</div>
+        <div class="data no-top">打开</div>
+        <div class="data no-top">游戏</div>
+        <div class="data no-top">跳跃</div>
+        <div class="data no-top">最高</div>
+        <div class="data no-top no-right">下载</div>
       </div>
       <div id="dataWrapper">
+      </div>
+      <div class="record plus">
+        <div class="data date plus"></div>
+        <div class="data plus">+0</div>
+        <div class="data plus">+0</div>
+        <div class="data plus">+0</div>
+        <div class="data plus">+0</div>
+        <div class="data plus no-right">+0</div>
       </div>
     </div>
     <div id="refresh" onclick="refresh()">刷新</div>
@@ -101,6 +112,7 @@
         if(isRe){
           J.show("刷新成功");
         }
+        checkPlusNum(data.value[data.value.length-1]);
       },
       time:15000,
       timeout:function(err){
@@ -108,6 +120,39 @@
       },
       message:"请求超时"
     });
+  }
+  function checkPlusNum(data){
+    var list=J.select(".record.plus").child();
+    list[0].text(data.date.split("T")[0].substring(2));
+    if(J.cookie("date")!=data.date){
+      list[1].text("+"+data.open_time);
+      list[2].text("+"+data.play_time);
+      list[3].text("+"+data.jump_time);
+      list[4].text("+"+data.best_score);
+      list[5].text("+"+data.download_time);
+    }else{
+      list[1].text("+"+getDiff("open_time",data.open_time));
+      list[2].text("+"+getDiff("play_time",data.play_time));
+      list[3].text("+"+getDiff("jump_time",data.jump_time));
+      list[4].text("+"+getDiff("best_score",data.best_score));
+      list[5].text("+"+getDiff("download_time",data.download_time));
+    }
+    saveCookies(data);
+  }
+  function getDiff(type,num){
+    var lastNum=J.cookie(type);
+    if(lastNum==""||lastNum==undefined){
+      lastNum=0;
+    }
+    return num-lastNum;
+  }
+  function saveCookies(data){
+    J.cookie("open_time",data.open_time,365);
+    J.cookie("play_time",data.play_time,365);
+    J.cookie("jump_time",data.jump_time,365);
+    J.cookie("best_score",data.best_score,365);
+    J.cookie("download_time",data.download_time,365);
+    J.cookie("date",data.date,365);
   }
   function bindData(data){
     var wrapper=J.id("dataWrapper");
@@ -121,10 +166,11 @@
   }
   function getOne(item){
     return J.new("div.record").html('\
-      <div class="data id">'+item.id+'</div>\
-      <div class="data date">'+item.date.split("T")[0]+'</div>\
-      <div class="data">'+item.play_time+'</div>\
+      <div class="data date">'+item.date.split("T")[0].substring(2)+'</div>\
       <div class="data">'+item.open_time+'</div>\
+      <div class="data">'+item.play_time+'</div>\
+      <div class="data">'+item.jump_time+'</div>\
+      <div class="data">'+item.best_score+'</div>\
       <div class="data no-right">'+item.download_time+'</div>\
     ');
   }

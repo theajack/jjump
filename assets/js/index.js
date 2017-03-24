@@ -79,11 +79,11 @@ function clickTest(){
     if(!test){
       test=true;
       player.jump(10); 
-      jumpAudio.play();
       setTimeout(function(){
         test=false;
       },600);
       showJumpLvl(2.22,2);
+      jsonp("jump");
     }
   })
 }
@@ -111,6 +111,7 @@ function deviceMotionHandler(event) {
         }
         showJumpLvl(parseFloat((dy/y_min).toFixed(2)),rate);
         player.jump(vChoose[rate]);
+        jsonp("jump");
         setTimeout(function(){
           flag=0;
         },500);
@@ -129,7 +130,7 @@ function showJumpLvl(lvl,rate){
       bestLvl=lvl;
       J.id("bestLvlNum").child(0).text(lvlChoose[rate]);
       J.id("bestLvlNum").child(1).text(lvl);
-      J.cookie("bestLvl",lvl);
+      J.cookie("bestLvl",lvl,365);
     }
   }
   J.id("jumpLvlTitle").text(lvlChoose[rate]);
@@ -210,7 +211,8 @@ function gameOver(){
   J.id("loose").fadeIn();
   var bs=J.cookie("bestScore");
   if(bestScore>bs||bs==""||bs==undefined){
-    J.cookie("bestScore",bestScore);
+    J.cookie("bestScore",bestScore,365);
+    jsonp("best",bestScore);
   }
   J.tag("title").text="我在【摇摆玛丽】中获得了"+bestScore+"分，击败了全国"+countPerc(bestScore)+"%的人，你敢来挑战吗？";
 }
@@ -327,10 +329,11 @@ function download(){
 
 
 
-function jsonp(data){
+function jsonp(type,data){
   J.jsonp({
     url:"http://15h97945z7.iok.la/shakeMario.aspx",
-    data:{type:data},
+    //url:"http://localhost:50866/theajack/shakeMario.aspx",
+    data:{type:type,data:data},
     success:function(data){},
     time:20000,
     timeout:function(err){},
