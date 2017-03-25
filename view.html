@@ -36,6 +36,9 @@
     .record.main{
       background-color: rgba(255,255,255,.9);
     }
+    .record.plus{
+      background-color: rgba(0,0,0,.2);
+    }
     .data{
       width:15%;
       float:left;
@@ -64,17 +67,18 @@
       background-color: rgba(255,255,255,.5);
       padding: 8px;
       text-align: center;
-      margin-top: 10px;
+      margin-bottom: 10px;
       border-radius: 5px;
       cursor: pointer;
       font-weight: bold;
     }
     .data.plus{
-      color:#f44;
+      color: #4f4;
     }
   </style>
   <body>
     <div id="title">摇摆玛丽数据统计</div>
+    <div id="refresh" onclick="refresh()">刷新</div>
     <div id="main">
       <div class="record main">
         <div class="data date no-top">日期</div>
@@ -84,8 +88,6 @@
         <div class="data no-top">最高</div>
         <div class="data no-top no-right">下载</div>
       </div>
-      <div id="dataWrapper">
-      </div>
       <div class="record plus">
         <div class="data date plus"></div>
         <div class="data plus">+0</div>
@@ -94,8 +96,9 @@
         <div class="data plus">+0</div>
         <div class="data plus no-right">+0</div>
       </div>
+      <div id="dataWrapper">
+      </div>
     </div>
-    <div id="refresh" onclick="refresh()">刷新</div>
     <script src="assets/js/jetter.min.js"></script>
   </body>
   <script type="text/javascript">
@@ -116,7 +119,7 @@
       },
       time:15000,
       timeout:function(err){
-        J.showWait(err,"error")
+        J.showWait("请求超时","error")
       },
       message:"请求超时"
     });
@@ -157,7 +160,7 @@
   function bindData(data){
     var wrapper=J.id("dataWrapper");
     data.each(function(item){
-      wrapper.append(getOne(item));
+      wrapper.prepend(getOne(item));
     })
   }
   function refresh(){

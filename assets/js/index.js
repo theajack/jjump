@@ -89,7 +89,7 @@ function clickTest(){
 }
 var y,x;
 var y_min=9;
-var x_max=7;
+var x_max=6;
 var time=5;
 var flag=0; 
 var vChoose=[10,11,12,12.5,13,13.5,14,14.5]
@@ -101,20 +101,27 @@ function deviceMotionHandler(event) {
     }else if(flag==2){
       var dy=parseInt(acceleration.y-y);
       var dx=parseInt(Math.abs(acceleration.x-x));
-      if(dy>y_min&&dx<x_max){
-        //J.show(dy+","+dx);
-        flag=1;
-        var v=0;
-        var rate=Math.floor(dy/y_min)-1;
-        if(rate>7){
-          rate=7;
+      
+      if(!isStop&&!isPause){
+        if(dy>y_min&&dx<x_max){
+          //J.show(dy+","+dx);
+          flag=1;
+          var v=0;
+          var rate=Math.floor(dy/y_min)-1;
+          if(rate>7){
+            rate=7;
+          }
+          showJumpLvl(parseFloat((dy/y_min).toFixed(2)),rate);
+          player.jump(vChoose[rate]);
+          jsonp("jump");
+          setTimeout(function(){
+            flag=0;
+          },500);
         }
-        showJumpLvl(parseFloat((dy/y_min).toFixed(2)),rate);
-        player.jump(vChoose[rate]);
-        jsonp("jump");
-        setTimeout(function(){
-          flag=0;
-        },500);
+      }else if(isStop){
+        if(dy>5){
+          restart();
+        }
       }
     }
     y=acceleration.y;
