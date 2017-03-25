@@ -27,6 +27,7 @@
     }
     body{
       overflow-y:scroll;
+      position:relative;
     }
     .record{
       text-align: center;
@@ -75,8 +76,24 @@
     .data.plus{
       color: #4f4;
     }
+    #showText{
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      font-size: 17px;
+      color: #64f369;
+      background-color: rgba(0,0,0,.4);
+      padding: 5px;
+      font-weight: bold;
+      border-radius: 5px;
+      letter-spacing: 2px;
+      display:none;
+    }
   </style>
   <body>
+    <div id="showTextWrapper">
+      <div id="showText">刷新成功</div>
+    </div>
     <div id="title">摇摆玛丽数据统计</div>
     <div id="refresh" onclick="refresh()">刷新</div>
     <div id="main">
@@ -105,6 +122,7 @@
   J.ready(function(){
     jsonp("viewData");
   });
+  var t;
   function jsonp(data,isRe){
     J.jsonp({
       url:"http://15h97945z7.iok.la/shakeMario.aspx",
@@ -112,9 +130,15 @@
       data:{type:data},
       success:function(data){
         bindData(data.value);
+        clearTimeout(t);
         if(isRe){
-          J.show("刷新成功");
+          J.id("showText").text("刷新成功").fadeIn();;
+        }else{
+          J.id("showText").text("加载完成").fadeIn();;
         }
+        t=setTimeout(function(){
+          J.id("showText").fadeOut(null,500);
+        },1500);
         checkPlusNum(data.value[data.value.length-1]);
       },
       time:15000,
