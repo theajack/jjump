@@ -54,13 +54,13 @@
 <button id='snap'>截图</button>
 <button id='close'>关闭</button>
 <button id='upload'>打印</button>
-<button id='scan'>扫码</button>新的x
+<button id='scan'>扫码</button>
 </div>
 <div id='result'></div> 
-<canvas id='canvas' style=''></canvas>
 <div id='widnow'>
   <video id='video'  style='width:320px'></video>
 </div>
+<canvas id='canvas' style=''></canvas>
 <script>
 /*var qrcode;
     window.onload =function(){
@@ -179,7 +179,7 @@
       timer=setInterval(function(){
         context.drawImage(video, 0, 0,video.offsetWidth,video.offsetHeight);
         qrcode.decode(canvas.toDataURL('image/png'));
-      },500)
+      },50)
       scan.onclick=null;
     }
     function adecode(){
