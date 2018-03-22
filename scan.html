@@ -47,9 +47,9 @@
 <div>
 <button id='snap'>截图</button>
 <button id='close'>关闭</button>
-<button id='upload'>打印</button>新的2
+<button id='upload'>打印</button>新的3
 </div>
-<canvas id='canvas' style='width:1000px;height:1000px'></canvas>
+<canvas id='canvas' style='width:300px;height:500px;'></canvas>
 <video id='video' src=""  style='width:300px;'></video>
 <script>
 /*var qrcode;
@@ -129,7 +129,10 @@
         alert(err);
       });
     }
-   
+    
+      setInterval(function(){
+        context.drawImage(video, 0, 0);
+      },200)
         
         
     });
@@ -138,7 +141,7 @@
     
     // 截取图像
     snap.addEventListener('click', function() {
-      context.drawImage(video, 0, 0, 200, 150);
+      context.drawImage(video, 0, 0);
     }, false);
    
     // 关闭摄像头
