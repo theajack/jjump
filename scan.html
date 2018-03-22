@@ -32,6 +32,12 @@
             /*vertical-align:middle;*/
             /*position: relative;*/
         }
+        #widnow{
+          width:320px;
+          height:320px;
+          margin:0 auto;
+          overflow:hidden;
+        }
     </style>
 </head>
 <body>
@@ -47,11 +53,14 @@
 <div>
 <button id='snap'>截图</button>
 <button id='close'>关闭</button>
-<button id='upload'>打印</button>新的3x
+<button id='upload'>打印</button>
+<button id='scan'>扫码</button>新的x
 </div>
 <div id='result'></div> 
 <canvas id='canvas' style=''></canvas>
-<video id='video'  style='width:320px'></video>
+<div id='widnow'>
+  <video id='video'  style='width:320px'></video>
+</div>
 <script>
 /*var qrcode;
     window.onload =function(){
@@ -71,24 +80,16 @@
     // 获取媒体方法（旧方法）
     navigator.getMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMeddia || navigator.msGetUserMedia;
    
-    var canvas = $('canvas'),
-      context = canvas.getContext('2d'),
+    var canvas = $('canvas');
+  canvas.width=320;
+  canvas.height=320;
+      var context = canvas.getContext('2d'),
       video = $('video'),
       snap = $('snap'),
       close = $('close'),
-  upload=$('upload'),
+      scan=$('scan'),
+      upload=$('upload'),
       mediaStreamTrack;
-  var isInit=false;
-  var reinitCanvas=function(){
-      canvas.width=video.offsetWidth;
-      canvas.height=video.offsetHeight;
-      context = canvas.getContext('2d');
-    
-   // timer=setInterval(function(){
-     //   context.drawImage(video, 0, 0,canvas.width,canvas.height);
-     //   qrcode.decode(canvas.toDataURL('image/png'));
-     // },500)
-  }
    var timer;
     var exArray = []; //存储设备源ID
     MediaStreamTrack.getSources(function (sourceInfos) {
@@ -148,14 +149,6 @@
         
         
     });
-    qrcode.callback=function(res){
-      if(res!="error decoding QR Code"){
-        document.getElementById('result').innerText=res;
-        clearInterval(timer);
-          close.click();
-        alert('success');
-      }
-    }
     
     
     
@@ -174,6 +167,21 @@
       alert(canvas.toDataURL('image/png'));
     }, false);
     
+    scan.onclick=function() {
+      qrcode.callback=function(res){
+        if(res!="error decoding QR Code"){
+          $('result').innerText=res;
+          clearInterval(timer);
+          close.click();
+          alert('success');
+        }
+      }
+      timer=setInterval(function(){
+        context.drawImage(video, 0, 0,video.offsetWidth,video.offsetHeight);
+        qrcode.decode(canvas.toDataURL('image/png'));
+      },500)
+      scan.onclick=null;
+    }
     function adecode(){
       var reads= new FileReader();
       var f=document.getElementById('file').files[0];
