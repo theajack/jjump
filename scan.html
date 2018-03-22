@@ -118,14 +118,14 @@
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({
         video:  {  
-            mandatory: { 
+            /*mandatory: { 
               minAspectRatio: 1.40, 
               maxAspectRatio: 1.78, 
               minFrameRate: 15, 
               maxFrameRate: 25, 
               minWidth: 1280, 
               minHeight: 720 
-            },
+            },*/
 
             'optional': [{  
                 'sourceId': exArray[1] //0为前置摄像头，1为后置  
@@ -149,14 +149,14 @@
     else if (navigator.getMedia) {
       navigator.getMedia({
         video: {  
-            mandatory: { 
+            /*mandatory: { 
               minAspectRatio: 1.40, 
               maxAspectRatio: 1.78, 
               minFrameRate: 15, 
               maxFrameRate: 25, 
               minWidth: 1280, 
               minHeight: 720 
-            },
+            },*/
             'optional': [{  
                 'sourceId': exArray[1] //0为前置摄像头，1为后置  
             }]  
@@ -200,13 +200,13 @@
           close.click();
           alert('success');
         }else{
-          decodeChekc();
+          decodeCheck();
         }
       }
-      decodeChekc();
+      decodeCheck();
       scan.onclick=null;
     }
-  function decodeChekc(){
+  function decodeCheck(){
     context.drawImage(video, 0, 0,video.offsetWidth,video.offsetHeight);
     qrcode.decode(canvas.toDataURL('image/png'));
   }
