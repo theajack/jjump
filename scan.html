@@ -47,11 +47,11 @@
 <div>
 <button id='snap'>截图</button>
 <button id='close'>关闭</button>
-<button id='upload'>打印</button>新的1
+<button id='upload'>打印</button>新的x
 </div>
 <div id='result'></div> 
-<canvas id='canvas' style='width:300px;height:500px;'></canvas>
-<video id='video' src=""   style='width:300px;height:500px;'></video>
+<canvas id='canvas' style=''></canvas>
+<video id='video' src="assets/raw/test.mp4" controls autoplay='true'  style='width:320px'></video>
 <script>
 /*var qrcode;
     window.onload =function(){
@@ -78,6 +78,16 @@
       close = $('close'),
   upload=$('upload'),
       mediaStreamTrack;
+  var reinitCanvas=function(){
+    canvas.width=video.offsetWidth;
+    canvas.height=video.offsetHeight;
+      context = canvas.getContext('2d'),
+    
+   // timer=setInterval(function(){
+     //   context.drawImage(video, 0, 0,canvas.width,canvas.height);
+     //   qrcode.decode(canvas.toDataURL('image/png'));
+     // },500)
+  }
    var timer;
     var exArray = []; //存储设备源ID
     MediaStreamTrack.getSources(function (sourceInfos) {
@@ -108,6 +118,7 @@
         mediaStreamTrack = typeof stream.stop === 'function' ? stream : stream.getTracks()[1];
    
         video.src = (window.URL || window.webkitURL).createObjectURL(stream);
+        video.onload=function(){reinitCanvas();}
         video.play();
       }).catch(function(err) {
         console.log(err);
@@ -125,16 +136,13 @@
         mediaStreamTrack = stream.getTracks()[0];
    
         video.src = (window.URL || window.webkitURL).createObjectURL(stream);
+        video.onload=function(){reinitCanvas();}
         video.play();
       }, function(err) {
         alert(err);
       });
     }
     
-   // timer=setInterval(function(){
-     //   context.drawImage(video, 0, 0,video.offsetWidth,video.offsetHeight);
-     //   qrcode.decode(canvas.toDataURL('image/png'));
-     // },500)
         
         
     });
@@ -151,7 +159,8 @@
     
     // 截取图像
     snap.addEventListener('click', function() {
-      context.drawImage(video, 0, 0,300,500);
+      context.drawImage(video, 0, 0,canvas.width,canvas.height);
+      alert(video.offsetWidth+','+video.offsetHeight+";"+video.outerWidth+","+video.outerHeight+";")
     }, false);
    
     // 关闭摄像头
