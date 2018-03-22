@@ -197,17 +197,19 @@
       qrcode.callback=function(res){
         if(res!="error decoding QR Code"){
           $('result').innerText=res;
-          clearInterval(timer);
           close.click();
           alert('success');
+        }else{
+          decodeChekc();
         }
       }
-      timer=setInterval(function(){
-        context.drawImage(video, 0, 0,video.offsetWidth,video.offsetHeight);
-        qrcode.decode(canvas.toDataURL('image/png'));
-      },50)
+      decodeChekc();
       scan.onclick=null;
     }
+  function decodeChekc(){
+    context.drawImage(video, 0, 0,video.offsetWidth,video.offsetHeight);
+    qrcode.decode(canvas.toDataURL('image/png'));
+  }
     function adecode(){
       var reads= new FileReader();
       var f=document.getElementById('file').files[0];
