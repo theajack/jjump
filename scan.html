@@ -47,7 +47,7 @@
 <div>
 <button id='snap'>截图</button>
 <button id='close'>关闭</button>
-<button id='upload'>打印</button>新的
+<button id='upload'>打印</button>新的1
 </div>
 <canvas id='canvas' style='width:1000px;height:1000px'></canvas>
 <video id='video' src=""  style='width:300px;'></video>
@@ -78,6 +78,16 @@
   upload=$('upload'),
       mediaStreamTrack;
    
+    var exArray = []; //存储设备源ID
+    MediaStreamTrack.getSources(function (sourceInfos) {
+        for (var i = 0; i != sourceInfos.length; ++i) {
+            var sourceInfo = sourceInfos[i];
+            //这里会遍历audio,video，所以要加以区分
+            if (sourceInfo.kind === 'video') {
+                exArray.push(sourceInfo.id);
+            }
+        }
+    });
     // 获取媒体方法（新方法）
     // 使用新方法打开摄像头
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -102,7 +112,11 @@
     // 使用旧方法打开摄像头
     else if (navigator.getMedia) {
       navigator.getMedia({
-        video: true
+        video: {  
+            'optional': [{  
+                'sourceId': exArray[1] //0为前置摄像头，1为后置  
+            }]  
+        }, 
       }, function(stream) {
         mediaStreamTrack = stream.getTracks()[0];
    
