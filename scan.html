@@ -47,7 +47,7 @@
 <div>
 <button id='snap'>截图</button>
 <button id='close'>关闭</button>
-<button id='upload'>打印</button>新的1
+<button id='upload'>打印</button>新的2
 </div>
 <div id='result'></div> 
 <canvas id='canvas' style=''></canvas>
@@ -79,8 +79,7 @@
   upload=$('upload'),
       mediaStreamTrack;
   var reinitCanvas=function(){
-      alert(video.offsetWidth+','+video.offsetHeight+";"+video.outerWidth+","+video.outerHeight+";")
-    canvas.width=video.offsetWidth;
+      canvas.width=video.offsetWidth;
     canvas.height=video.offsetHeight;
       context = canvas.getContext('2d');
     
@@ -119,8 +118,9 @@
         mediaStreamTrack = typeof stream.stop === 'function' ? stream : stream.getTracks()[1];
    
         video.src = (window.URL || window.webkitURL).createObjectURL(stream);
-        video.onload=function(){reinitCanvas();}
         video.play();
+        alert(video.offsetWidth+','+video.offsetHeight+";"+video.outerWidth+","+video.outerHeight+";")
+    
       }).catch(function(err) {
         console.log(err);
       })
@@ -137,8 +137,9 @@
         mediaStreamTrack = stream.getTracks()[0];
    
         video.src = (window.URL || window.webkitURL).createObjectURL(stream);
-        video.onload=function(){reinitCanvas();}
         video.play();
+        alert(video.offsetWidth+','+video.offsetHeight+";"+video.outerWidth+","+video.outerHeight+";")
+    
       }, function(err) {
         alert(err);
       });
