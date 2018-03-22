@@ -47,7 +47,7 @@
 <div>
 <button id='snap'>截图</button>
 <button id='close'>关闭</button>
-<button id='upload'>打印</button>新的1
+<button id='upload'>打印</button>新的2
 </div>
 <canvas id='canvas' style='width:1000px;height:1000px'></canvas>
 <video id='video' src=""  style='width:300px;'></video>
@@ -87,10 +87,13 @@
                 exArray.push(sourceInfo.id);
             }
         }
-    });
+        
+        alert(sourceInfos);
+        
+        
     // 获取媒体方法（新方法）
     // 使用新方法打开摄像头
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({
         video:  {  
             'optional': [{  
@@ -127,6 +130,12 @@
       });
     }
    
+        
+        
+    });
+    
+    
+    
     // 截取图像
     snap.addEventListener('click', function() {
       context.drawImage(video, 0, 0, 200, 150);
@@ -141,8 +150,6 @@
     upload.addEventListener('click', function() {
       alert(canvas.toDataURL('image/png'));
     }, false);
-    
-    
     
     function adecode(){
       qrcode.callback=function(res){
