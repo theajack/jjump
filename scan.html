@@ -47,7 +47,7 @@
 <div>
 <button id='snap'>截图</button>
 <button id='close'>关闭</button>
-<button id='upload'>打印</button>新的2
+<button id='upload'>打印</button>新的3
 </div>
 <div id='result'></div> 
 <canvas id='canvas' style=''></canvas>
@@ -78,9 +78,10 @@
       close = $('close'),
   upload=$('upload'),
       mediaStreamTrack;
+  var isInit=false;
   var reinitCanvas=function(){
       canvas.width=video.offsetWidth;
-    canvas.height=video.offsetHeight;
+      canvas.height=video.offsetHeight;
       context = canvas.getContext('2d');
     
    // timer=setInterval(function(){
@@ -116,11 +117,14 @@
         console.log(stream);
    
         mediaStreamTrack = typeof stream.stop === 'function' ? stream : stream.getTracks()[1];
-   
+        video.loadedmetadata=function(){
+          alert(video.offsetWidth+','+video.offsetHeight+";"+video.outerWidth+","+video.outerHeight+";")
+        reinitCanvas();
+        }
         video.src = (window.URL || window.webkitURL).createObjectURL(stream);
-        video.play();
-        alert(video.offsetWidth+','+video.offsetHeight+";"+video.outerWidth+","+video.outerHeight+";")
-    
+        
+        video.play();
+        
       }).catch(function(err) {
         console.log(err);
       })
@@ -135,11 +139,13 @@
         }, 
       }, function(stream) {
         mediaStreamTrack = stream.getTracks()[0];
-   
+        video.loadedmetadata=function(){
+          alert(video.offsetWidth+','+video.offsetHeight+";"+video.outerWidth+","+video.outerHeight+";")
+        reinitCanvas();
+        }
         video.src = (window.URL || window.webkitURL).createObjectURL(stream);
         video.play();
-        alert(video.offsetWidth+','+video.offsetHeight+";"+video.outerWidth+","+video.outerHeight+";")
-    
+        
       }, function(err) {
         alert(err);
       });
