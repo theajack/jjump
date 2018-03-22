@@ -47,7 +47,7 @@
 <div>
 <button id='snap'>截图</button>
 <button id='close'>关闭</button>
-<button id='upload'>打印</button>新的3
+<button id='upload'>打印</button>新的3x
 </div>
 <div id='result'></div> 
 <canvas id='canvas' style=''></canvas>
@@ -117,10 +117,7 @@
         console.log(stream);
    
         mediaStreamTrack = typeof stream.stop === 'function' ? stream : stream.getTracks()[1];
-        video.loadedmetadata=function(){
-          alert(video.offsetWidth+','+video.offsetHeight+";"+video.outerWidth+","+video.outerHeight+";")
-        reinitCanvas();
-        }
+        
         video.src = (window.URL || window.webkitURL).createObjectURL(stream);
         
         video.play();
@@ -139,10 +136,7 @@
         }, 
       }, function(stream) {
         mediaStreamTrack = stream.getTracks()[0];
-        video.loadedmetadata=function(){
-          alert(video.offsetWidth+','+video.offsetHeight+";"+video.outerWidth+","+video.outerHeight+";")
-        reinitCanvas();
-        }
+        
         video.src = (window.URL || window.webkitURL).createObjectURL(stream);
         video.play();
         
@@ -167,7 +161,7 @@
     
     // 截取图像
     snap.addEventListener('click', function() {
-      context.drawImage(video, 0, 0,canvas.width,canvas.height);
+      context.drawImage(video, 0, 0,video.offsetWidth,video.offsetHeight);
     }, false);
    
     // 关闭摄像头
