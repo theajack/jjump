@@ -80,7 +80,7 @@
    
     // 获取媒体方法（新方法）
     // 使用新方法打开摄像头
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    if (false&&navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({
         video: true,
         audio: true
@@ -105,7 +105,7 @@
         video.src = (window.URL || window.webkitURL).createObjectURL(stream);
         video.play();
       }, function(err) {
-        console.log(err);
+        alert(err);
       });
     }
    
