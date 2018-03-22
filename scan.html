@@ -80,10 +80,10 @@
    
     // 获取媒体方法（新方法）
     // 使用新方法打开摄像头
-    if (false&&navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({
         video: true,
-        audio: true
+        audio: false
       }).then(function(stream) {
         console.log(stream);
    
