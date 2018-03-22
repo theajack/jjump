@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8"/>
+    <!--<script src="qrcode.js"></script>-->
+    <script type="text/javascript" src="src/grid.js"></script>
+<script type="text/javascript" src="src/version.js"></script>
+<script type="text/javascript" src="src/detector.js"></script>
+<script type="text/javascript" src="src/formatinf.js"></script>
+<script type="text/javascript" src="src/errorlevel.js"></script>
+<script type="text/javascript" src="src/bitmat.js"></script>
+<script type="text/javascript" src="src/datablock.js"></script>
+<script type="text/javascript" src="src/bmparser.js"></script>
+<script type="text/javascript" src="src/datamask.js"></script>
+<script type="text/javascript" src="src/rsdecoder.js"></script>
+<script type="text/javascript" src="src/gf256poly.js"></script>
+<script type="text/javascript" src="src/gf256.js"></script>
+<script type="text/javascript" src="src/decoder.js"></script>
+<script type="text/javascript" src="src/qrcode.js"></script>
+<script type="text/javascript" src="src/findpat.js"></script>
+<script type="text/javascript" src="src/alignpat.js"></script>
+<script type="text/javascript" src="src/databr.js"></script>
+    <style>
+        #qrcode{
+            /*text-align: center;*/
+            /*display: table-cell;*/
+            /*width: 96px;*/
+            /*height: 96px;*/
+            /*vertical-align:middle;*/
+            /*position: relative;*/
+        }
+    </style>
+</head>
+<body>
+<div id="qrcode">
+</div>
+
+<input type="text" id="getval"/> <button id="send">点击更换验证码</button><br />
+
+
+<input type="file" id="file" accept="image/*" name="file" onchange="adecode()">
+<div id='result'></div> 
+<img src="" id='show' alt="" />
+<script>
+/*var qrcode;
+    window.onload =function(){
+         qrcode= new QRCode(document.getElementById("qrcode"), {
+            width : 96,//设置宽高
+            height : 96
+        });
+        qrcode.makeCode("http://www.baidu.com");
+        document.getElementById("send").onclick =function(){
+            qrcode.makeCode(document.getElementById("getval").value);
+        }
+    }*/
+    function adecode(){
+      qrcode.callback=function(res){
+        document.getElementById('result').innerText=res;
+      }
+      var reads= new FileReader();
+      var f=document.getElementById('file').files[0];
+      reads.readAsDataURL(f);
+      reads.onload=function (e) {
+        qrcode.decode(this.result);
+        document.getElementById('show').src=this.result;
+      };
+    }
+
+
+</script>
+</body>
+</html>
