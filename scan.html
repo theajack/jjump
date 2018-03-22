@@ -47,7 +47,7 @@
 <div>
 <button id='snap'>截图</button>
 <button id='close'>关闭</button>
-<button id='upload'>打印</button>新的x
+<button id='upload'>打印</button>新的1
 </div>
 <div id='result'></div> 
 <canvas id='canvas' style=''></canvas>
@@ -79,6 +79,7 @@
   upload=$('upload'),
       mediaStreamTrack;
   var reinitCanvas=function(){
+      alert(video.offsetWidth+','+video.offsetHeight+";"+video.outerWidth+","+video.outerHeight+";")
     canvas.width=video.offsetWidth;
     canvas.height=video.offsetHeight;
       context = canvas.getContext('2d');
@@ -160,7 +161,6 @@
     // 截取图像
     snap.addEventListener('click', function() {
       context.drawImage(video, 0, 0,canvas.width,canvas.height);
-      alert(video.offsetWidth+','+video.offsetHeight+";"+video.outerWidth+","+video.outerHeight+";")
     }, false);
    
     // 关闭摄像头
