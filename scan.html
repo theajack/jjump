@@ -47,8 +47,9 @@
 <div>
 <button id='snap'>截图</button>
 <button id='close'>关闭</button>
-<button id='upload'>打印</button>新的3
+<button id='upload'>打印</button>新的
 </div>
+<div id='result'></div> 
 <canvas id='canvas' style='width:300px;height:500px;'></canvas>
 <video id='video' src=""  style='width:300px;'></video>
 <script>
@@ -77,7 +78,7 @@
       close = $('close'),
   upload=$('upload'),
       mediaStreamTrack;
-   
+   var timer;
     var exArray = []; //存储设备源ID
     MediaStreamTrack.getSources(function (sourceInfos) {
         for (var i = 0; i != sourceInfos.length; ++i) {
@@ -88,7 +89,7 @@
             }
         }
         
-        alert(sourceInfos);
+        //alert(sourceInfos);
         
         
     // 获取媒体方法（新方法）
@@ -130,18 +131,27 @@
       });
     }
     
-      setInterval(function(){
-        context.drawImage(video, 0, 0);
-      },200)
+   // timer=setInterval(function(){
+     //   context.drawImage(video, 0, 0,video.offsetWidth,video.offsetHeight);
+     //   qrcode.decode(canvas.toDataURL('image/png'));
+     // },500)
         
         
     });
+    qrcode.callback=function(res){
+      if(res!="error decoding QR Code"){
+        document.getElementById('result').innerText=res;
+        clearInterval(timer);
+          close.click();
+        alert('success');
+      }
+    }
     
     
     
     // 截取图像
     snap.addEventListener('click', function() {
-      context.drawImage(video, 0, 0);
+      context.drawImage(video, 0, 0,video.offsetWidth,video.offsetHeight);
     }, false);
    
     // 关闭摄像头
@@ -155,9 +165,6 @@
     }, false);
     
     function adecode(){
-      qrcode.callback=function(res){
-        //document.getElementById('result').innerText=res;
-      }
       var reads= new FileReader();
       var f=document.getElementById('file').files[0];
       reads.readAsDataURL(f);
